@@ -6,7 +6,7 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import { useCallback } from "react";
-import Particles from "react-particles";
+import ParticlesBg from 'particles-bg'
 import 'tachyons';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
@@ -55,11 +55,9 @@ class App extends Component{
   calculateFaceLocation = (data) => {
    try{ 
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-
-  //const clarifaiFace = data.outputs.regions.region_info.bounding_box;
-  const image = document.getElementById('inputimage');
-  const width = Number(image.width);
-  const height = Number(image.height);
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
   
   return {
    leftCol: clarifaiFace.left_col * width,
@@ -72,12 +70,11 @@ class App extends Component{
   }catch(error){
     console.log("error", error);
   }
-    //console.log(dataparse);
+    
 }
 
 displayFaceBox = (box) => {
     this.setState({box: box});
-    console.log(box);
 }
 
 
@@ -131,9 +128,12 @@ displayFaceBox = (box) => {
                         id: this.state.user.id
                     })
                 })
+                .then(fetchok = false)
                 .then(response => response.json())
                 .then(count => {
-                    this.setState(Object.assign(this.state.user, { entries: count}))
+                    this.setState(Object.assign(this.state.user, {entries: count}));
+                    ;
+                    
                       })
             }
         })
@@ -151,19 +151,20 @@ displayFaceBox = (box) => {
 
 
   render(){
+    const {isSignedIn, imageUrl, route, box,} = this.state;
 
  return (
+
     <div className="App">
+    <ParticlesBg type='cobweb' color="#ffffff" num={150} bg={true} />
      <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange} />
      {this.state.route === 'home'
-     
      ?
-        
-       <div>
-     <Logo />
-    {/*} <Rank 
+    <div>
+    <Logo />
+    <Rank 
      name={this.state.user.name}
-     entries={this.state.user.entries} />*/}
+     entries={this.state.user.entries['entries']} />
      <ImageLinkForm 
      onInputChange={this.onInputChange}
      onButtonSubmit={this.onButtonSubmit}
@@ -172,7 +173,7 @@ displayFaceBox = (box) => {
     </div>
     : (this.state.route === 'signin'
     ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-    : <Register loadUser={this.loadUser}onRouteChange={this.onRouteChange}/>
+    : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         )
     }
     
