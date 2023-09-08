@@ -13,11 +13,11 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Register from './components/Register/Register';
 
 
-const PAT = '1f99a3573f0143219eee1f52aed0a5dd';
-const USER_ID = 'erinbejta';       
-const APP_ID = 'my-first-application-t9kdyj';
-const MODEL_ID = 'face-detection';
-const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';    
+const PAT = ''; //Clarifai PAT Key here
+const USER_ID = ''; //Clarifai User ID here       
+const APP_ID = ''; //Clarifai App ID here
+const MODEL_ID = 'face-detection'; //Clarifai AI Model Used
+const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105'; //Version of AI Model    
 
 
 class App extends Component{
